@@ -15,11 +15,11 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="4.5*" />
         </Grid.RowDefinitions>
-        <StackPanel Margin="10,10,553.6,10" Grid.ColumnSpan="2">
-            <TextBlock Text="対象IPアドレス" FontSize="15" Margin="72,0,0,0" HorizontalAlignment="Left" Width="86" />
-            <TextBox x:Name="tbIPAddress" FontSize="25" TextAlignment="Center" HorizontalScrollBarVisibility="Auto" AcceptsReturn="False" AcceptsTab="False" TextInput="TbIPAddress_TextInput" HorizontalAlignment="Left" Width="230"/>
+        <StackPanel Margin="10, 10">
+            <TextBlock Text="対象IPアドレス" FontSize="15" HorizontalAlignment="Center" />
+            <TextBox x:Name="tbIPAddress" FontSize="25" TextAlignment="Center" HorizontalScrollBarVisibility="Auto" AcceptsReturn="False" AcceptsTab="False" TextInput="TbIPAddress_TextInput"/>
         </StackPanel>
-        <TabControl x:Name="tabControl" Grid.Row="0" Grid.RowSpan="2" Margin="18.6,0,-0.4,0" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
+        <TabControl x:Name="tabControl" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
             <TabItem Header="Ping">
                 <StackPanel Margin="10">
                     <TextBlock Text="Ping" FontSize="30" />
@@ -44,22 +44,22 @@
                     <StackPanel Orientation="Horizontal" Margin="20, 10, 0, 0">
                         <TextBox x:Name="tbPort" FontSize="20" Width="100" TextAlignment="Center" />
                         <ComboBox x:Name="cbPort" Width="150" SelectedIndex="0">
-                            <ComboBoxItem x:Name="cbiDummy" Content="ポート番号を選択" />
-                            <ComboBoxItem x:Name="cbiFTP" Content="FTPポート - 21" />
-                            <ComboBoxItem x:Name="cbiSSH" Content="SSHポート - 22" />
-                            <ComboBoxItem x:Name="cbiSMTP" Content="SMTPポート - 25" />
-                            <ComboBoxItem x:Name="cbiDNS" Content="DNSポート - 51" />
-                            <ComboBoxItem x:Name="cbiHTTP" Content="HTTPポート - 80" />
-                            <ComboBoxItem x:Name="cbiPOP" Content="POP3ポート - 110" />
-                            <ComboBoxItem x:Name="cbiIMAP" Content="IMAPポート - 143" />
-                            <ComboBoxItem x:Name="cbiMC" Content="Minecraftポート - 25565" />
+                            <ComboBoxItem Name="cbiDummy" Content="ポート番号を選択" />
+                            <ComboBoxItem Name="cbiFTP" Content="FTPポート - 21" />
+                            <ComboBoxItem Name="cbiSSH" Content="SSHポート - 22" />
+                            <ComboBoxItem Name="cbiSMTP" Content="SMTPポート - 25" />
+                            <ComboBoxItem Name="cbiDNS" Content="DNSポート - 51" />
+                            <ComboBoxItem Name="cbiHTTP" Content="HTTPポート - 80" />
+                            <ComboBoxItem Name="cbiPOP" Content="POP3ポート - 110" />
+                            <ComboBoxItem Name="cbiIMAP" Content="IMAPポート - 143" />
+                            <ComboBoxItem Name="cbiMC" Content="Minecraftポート - 25565" />
                         </ComboBox>
                         <ComboBox x:Name="cbSSLPort" Width="150" SelectedIndex="0" Visibility="Collapsed">
-                            <ComboBoxItem x:Name="cbiSSLDummy" Content="SSLポート番号を選択" />
-                            <ComboBoxItem x:Name="cbiFTPS" Content="FTPSポート - 990" />
-                            <ComboBoxItem x:Name="cbiSMTPS" Content="SMTPSポート - 465" />
-                            <ComboBoxItem x:Name="cbiHTTPS" Content="HTTPSポート - 443" />
-                            <ComboBoxItem x:Name="cbiIMAPS" Content="IMAPSポート - 993" />
+                            <ComboBoxItem Name="cbiSSLDummy" Content="SSLポート番号を選択" />
+                            <ComboBoxItem Name="cbiFTPS" Content="FTPSポート - 990" />
+                            <ComboBoxItem Name="cbiSMTPS" Content="SMTPSポート - 465" />
+                            <ComboBoxItem Name="cbiHTTPS" Content="HTTPSポート - 443" />
+                            <ComboBoxItem Name="cbiIMAPS" Content="IMAPSポート - 993" />
                         </ComboBox>
                         <CheckBox x:Name="cbIsSSLPort" Content="SSLポートのチェックをする" Margin="10, 0, 0, 0" VerticalAlignment="Center" Checked="CbIsSSLPort_Checked" Unchecked="CbIsSSLPort_Unchecked" />
                     </StackPanel>
@@ -80,21 +80,10 @@
                     <Button x:Name="btnWhois" Content="Whois開始" FontSize="20" Width="100" HorizontalAlignment="Left" Margin="20, 10, 0, 0" />
                 </StackPanel>
             </TabItem>
-            <ComboBox x:Name="cbPort_Copy" Width="150" SelectedIndex="0">
-                <ComboBoxItem x:Name="cbiDummy1" Content="ポート番号を選択" />
-                <ComboBoxItem x:Name="cbiFTP1" Content="FTPポート - 21" />
-                <ComboBoxItem x:Name="cbiSSH1" Content="SSHポート - 22" />
-                <ComboBoxItem x:Name="cbiSMTP1" Content="SMTPポート - 25" />
-                <ComboBoxItem x:Name="cbiDNS1" Content="DNSポート - 51" />
-                <ComboBoxItem x:Name="cbiHTTP1" Content="HTTPポート - 80" />
-                <ComboBoxItem x:Name="cbiPOP1" Content="POP3ポート - 110" />
-                <ComboBoxItem x:Name="cbiIMAP1" Content="IMAPポート - 143" />
-                <ComboBoxItem x:Name="cbiMC1" Content="Minecraftポート - 25565" />
-            </ComboBox>
         </TabControl>
-        <StackPanel Grid.Row="1" Margin="10,10,553.6,10" Grid.ColumnSpan="2">
-            <TextBlock Text="コンソール" FontSize="13" Margin="0,0,-22.6,0" />
-            <TextBox x:Name="tbConsole" IsReadOnly="True" VerticalScrollBarVisibility="Visible" Height="307" HorizontalAlignment="Left" Width="230" />
+        <StackPanel Grid.Row="1" Margin="10">
+            <TextBlock Text="コンソール" FontSize="13" />
+            <TextBox x:Name="tbConsole" IsReadOnly="True" VerticalScrollBarVisibility="Visible" />
         </StackPanel>
     </Grid>
 </Window>
