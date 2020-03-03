@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Net.NetworkInformation;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -64,50 +67,58 @@ namespace NetworkTester
 
         private void StartPing(string timeout, string countofping)
         {
+            string Address = tbIPAddress.Text;
             tbConsole.AppendText("\nStarting Ping...");
-            try
+            Thread thread = new Thread(() =>
             {
-                if (int.TryParse(timeout, out int timeOutSeconds))
+                try
                 {
-                    if (int.TryParse(countofping, out int pingCount))
+                    if (int.TryParse(timeout, out int timeOutSeconds))
                     {
-                        Ping ping = new Ping();
-                        string Address;
-                        if (tbIPAddress.Text == "localhost")
+                        if (int.TryParse(countofping, out int pingCount))
                         {
-                            Address = "127.0.0.1";
-                        }
-                        else
-                        {
-                            Address = tbIPAddress.Text;
-                        }
-                        for (int i = 0; i < pingCount; i++)
-                        {
-                            PingReply reply = ping.Send(Address);
-                            if (reply.Status == IPStatus.Success)
-                            {
-                                tbConsole.AppendText("\nReply from " + reply.Address.ToString() + ": bytes=" + reply.Buffer.Length.ToString() + " time=" + reply.RoundtripTime.ToString() + "ms TTL=" + reply.Options.Ttl.ToString());
-                            }
-                            else
-                            {
-                                tbConsole.AppendText("\n" + reply.Status.ToString());
-                            }
+                            Ping ping = new Ping();
 
-                            // ping送信の間隔を取る
-                            if (i < pingCount)
+                            if (Address == "localhost")
                             {
-                                System.Threading.Thread.Sleep(timeOutSeconds * 1000);
+                                Address = "127.0.0.1";
+                            }
+                            for (int i = 0; i < pingCount; i++)
+                            {
+                                PingReply reply = ping.Send(Address);
+
+                                this.Dispatcher.Invoke((Action)(() =>
+                                {
+
+                                    if (reply.Status == IPStatus.Success)
+                                    {
+                                        tbConsole.AppendText("\nReply from " + reply.Address.ToString() + ": bytes=" + reply.Buffer.Length.ToString() + " time=" + reply.RoundtripTime.ToString() + "ms TTL=" + reply.Options.Ttl.ToString());
+                                    }
+                                    else
+                                    {
+                                        tbConsole.AppendText("\n" + reply.Status.ToString());
+                                    }
+                                }));
+                                // ping送信の間隔を取る
+                                if (i < pingCount)
+                                {
+                                    System.Threading.Thread.Sleep(timeOutSeconds * 1000);
+                                }
                             }
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                tbConsole.AppendText("\nPing Failed");
-                tbConsole.AppendText("\n" + ex.Message);
-                tbConsole.AppendText("\nStackTrace: \n" + ex.StackTrace);
-            }
+                catch (Exception ex)
+                {
+                    this.Dispatcher.Invoke((Action)(() =>
+                    {
+                        tbConsole.AppendText("\nPing Failed");
+                        tbConsole.AppendText("\n" + ex.Message);
+                        tbConsole.AppendText("\nStackTrace: \n" + ex.StackTrace);
+                    }));
+                }
+            });
+            thread.Start();
         }
 
         private void TbPingCount_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -122,5 +133,6 @@ namespace NetworkTester
 
             e.Handled = cut;
         }
+
     }
 }
